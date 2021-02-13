@@ -1,4 +1,5 @@
 const yargs = require('yargs')
+const chalk = require('chalk')
 const fs =require('fs')
 
 const addNote =function (title,body) {
@@ -14,10 +15,10 @@ const addNote =function (title,body) {
         }
         notes.push(note)
         saveNote(notes)
-        console.log('Done')
+        console.log(chalk.green('Done'))
     }
     else {
-        console.log('This note already exists')
+        console.log(chalk.red('This note already exists'))
     
 }
 
@@ -29,7 +30,7 @@ const removeNote =function (title,body) {
         return note.title === title && note.body === body
     })
     if (duplicatedNotes.length === 0) {
-      console.log('ther\'s no such note')
+      console.log(chalk.bgRed('ther\'s no such note'))
     }
     else {
         const removedNotes = notes.filter(function (note) {
@@ -38,7 +39,7 @@ const removeNote =function (title,body) {
 
         notes = removedNotes
         saveNote(notes)
-        console.log('Done')
+        console.log(chalk.bgGreen('removed'))
     
 }
 
