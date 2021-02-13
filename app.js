@@ -4,12 +4,22 @@ const fs =require('fs')
 const addNote =function (title,body) {
    
     const notes = loadNotes()
-    const note = {
-        title: title,
-        body: body
+    const duplicatedNotes = notes.filter(function (note) {
+        return note.title === title && note.body === body
+    })
+    if (duplicatedNotes.length === 0) {
+        const note = {
+            title: title,
+            body: body
+        }
+        notes.push(note)
+        saveNote(notes)
+        console.log('Done')
     }
-    notes.push(note)
-    saveNote(notes)
+    else {
+        console.log('This note already exists')
+    
+}
 
 }
 
@@ -25,7 +35,6 @@ const loadNotes = () => {
         return JSON.parse(you)
     }
     catch(e) {
-        console.log('buyoda xato borikan')
         return []
     }
 }
@@ -49,3 +58,5 @@ yargs.command({
     addNote(argv.title, argv.body)
     }
 })
+
+yargs.argv
