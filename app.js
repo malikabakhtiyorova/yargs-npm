@@ -22,6 +22,27 @@ const addNote =function (title,body) {
 }
 
 }
+const removeNote =function (title,body) {
+   
+    let notes = loadNotes()
+    const duplicatedNotes = notes.filter(function (note) {
+        return note.title === title && note.body === body
+    })
+    if (duplicatedNotes.length === 0) {
+      console.log('ther\'s no such note')
+    }
+    else {
+        const removedNotes = notes.filter(function (note) {
+            return note.title !== title && note.body !== body
+        })
+
+        notes = removedNotes
+        saveNote(notes)
+        console.log('Done')
+    
+}
+
+}
 
 const saveNote =function (notes) {
     const sh = JSON.stringify(notes)
@@ -56,6 +77,26 @@ yargs.command({
     },
     handler: function (argv) {
     addNote(argv.title, argv.body)
+    }
+})
+
+yargs.command({
+    command: 'remove',
+    describe: "wew",
+    builders: {
+        title: {
+            describe: 'dad',
+            demandOption: true,
+            type: 'string'
+        },
+        body: {
+            describe: 'mom',
+            demandOption: true,
+            type: 'string'
+        },
+    },
+    handler: function (argv) {
+    removeNote(argv.title, argv.body)
     }
 })
 
